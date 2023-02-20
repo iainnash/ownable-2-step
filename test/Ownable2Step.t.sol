@@ -3,8 +3,8 @@ pragma solidity 0.8.17;
 
 import "forge-std/Test.sol";
 
-import {IOwnable2Step} from "../../../src/utils/ownable/IOwnable2Step.sol";
-import {Ownable2Step} from "../../../src/utils/ownable/Ownable2Step.sol";
+import {IOwnable2Step} from "../src/IOwnable2Step.sol";
+import {Ownable2Step} from "../src/Ownable2Step.sol";
 
 contract OwnedContract is Ownable2Step {
     constructor() Ownable2Step(msg.sender) {}
