@@ -5,6 +5,15 @@ import "forge-std/Test.sol";
 
 import {Ownable2StepUpgradeable} from "../src/Ownable2StepUpgradeable.sol";
 import {IOwnable2StepUpgradeable} from "../src/IOwnable2StepUpgradeable.sol";
+import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+
+
+contract OwnableTest is Ownable2StepUpgradeable {
+    constructor(address _initialOwner) initializer {
+        __Ownable_init(_initialOwner);
+    }
+}
+
 
 contract Ownable2StepUpgradableTest is Test {
     Ownable2StepUpgradeable internal ownable;
@@ -12,17 +21,7 @@ contract Ownable2StepUpgradableTest is Test {
 
     function setUp() external {
         owner = vm.addr(0x1);
-        ZoraCreator1155FactoryImpl factory = new ZoraCreator1155FactoryImpl(
-            IZoraCreator1155(owner)
-        );
-        ZoraCreator1155FactoryProxy proxy = new ZoraCreator1155FactoryProxy(
-            address(factory),
-            abi.encodeWithSelector(
-                ZoraCreator1155FactoryImpl.initialize.selector,
-                owner
-            )
-        );
-        ownable = Ownable2StepUpgradeable(address(proxy));
+        ownable = new OwnableTest(address(owner));
     }
 
     function test_init() external {
